@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leads — Lead Compass</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/leads.css">
+</head>
+<body>
+<div class="app-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">🧭</div>
+      <span class="logo-text">Lead Compass</span>
+    </div>
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">Main</span>
+      <a class="nav-item" href="dashboard.html"><span class="icon">📊</span> Dashboard</a>
+      <a class="nav-item active" href="leads.html"><span class="icon">👥</span> Leads</a>
+      <a class="nav-item" href="analytics.html"><span class="icon">📈</span> Analytics</a>
+      <span class="nav-section-label">Account</span>
+      <a class="nav-item" href="settings.html"><span class="icon">⚙️</span> Settings</a>
+      <a class="nav-item hidden" href="admin.html" id="admin-nav"><span class="icon">🛡️</span> Admin</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div id="user-avatar-wrap"></div>
+        <div style="overflow:hidden;flex:1">
+          <div class="user-name" id="user-name">Loading…</div>
+          <div class="user-email" id="user-email"></div>
+        </div>
+      </div>
+      <button class="nav-item" id="logout-btn" style="margin-top:4px;width:100%;color:var(--danger)">
+        <span class="icon">🚪</span> Sign out
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title">Leads</h1>
+      </div>
+      <div class="topbar-right">
+        <button class="btn btn-primary" id="create-lead-btn">+ New Lead</button>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <!-- Toolbar -->
+      <div class="leads-toolbar">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input class="input" id="search-input" type="text" placeholder="Search leads…">
+        </div>
+        <div class="filter-group">
+          <select class="select" id="status-filter">
+            <option value="">All Statuses</option>
+            <option value="new">New</option>
+            <option value="contacted">Contacted</option>
+            <option value="qualified">Qualified</option>
+            <option value="proposal">Proposal</option>
+            <option value="won">Won</option>
+            <option value="lost">Lost</option>
+          </select>
+          <select class="select" id="source-filter">
+            <option value="">All Sources</option>
+            <option value="website">Website</option>
+            <option value="widget">Widget</option>
+            <option value="manual">Manual</option>
+            <option value="referral">Referral</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="card" style="padding:0;overflow:hidden">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Lead</th>
+                <th class="hide-mobile">Company</th>
+                <th>Status</th>
+                <th class="hide-mobile">Source</th>
+                <th class="hide-mobile">Value</th>
+                <th class="hide-mobile">Added</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="leads-tbody">
+              <tr>
+                <td colspan="7" style="text-align:center;padding:40px">
+                  <div class="spinner" style="margin:auto"></div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" style="padding:var(--space-4) var(--space-5)">
+          <span class="pagination-info" id="pagination-info">Loading…</span>
+          <div class="pagination-btns" id="pagination-btns"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Create Lead Modal -->
+<div class="modal-overlay" id="create-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title">New Lead</h2>
+      <button class="modal-close" id="modal-close">×</button>
+    </div>
+
+    <form id="create-form">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)">
+        <div class="form-group">
+          <label class="form-label">Full Name *</label>
+          <input class="input" name="name" placeholder="Jane Smith" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email *</label>
+          <input class="input" name="email" type="email" placeholder="jane@company.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone</label>
+          <input class="input" name="phone" placeholder="+91 9876543210">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Company</label>
+          <input class="input" name="company" placeholder="Acme Corp">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Source</label>
+          <select class="select" name="source">
+            <option value="manual">Manual</option>
+            <option value="website">Website</option>
+            <option value="referral">Referral</option>
+            <option value="import">Import</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Est. Value (₹)</label>
+          <input class="input" name="value" type="number" placeholder="50000">
+        </div>
+      </div>
+      <div class="form-group" style="margin-top:var(--space-4)">
+        <label class="form-label">Notes</label>
+        <textarea class="textarea" name="notes" placeholder="Any initial notes…"></textarea>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="modal-close-2" onclick="document.getElementById('create-modal').classList.remove('open')">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="create-submit">Create Lead</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Lead Detail Slide Panel -->
+<div class="lead-detail-overlay" id="lead-detail-overlay">
+  <div class="lead-detail-panel">
+    <div class="panel-header">
+      <span style="font-weight:600;font-size:var(--text-base)">Lead Details</span>
+      <button class="modal-close" id="panel-close">×</button>
+    </div>
+    <div class="panel-body" id="panel-body">
+      <div style="display:flex;justify-content:center;padding:40px">
+        <div class="spinner"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="../js/leads.js"></script>
+</body>
+</html>

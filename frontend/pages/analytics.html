@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics — Lead Compass</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/leads.css">
+</head>
+<body>
+<div class="app-layout">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">🧭</div>
+      <span class="logo-text">Lead Compass</span>
+    </div>
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">Main</span>
+      <a class="nav-item" href="dashboard.html"><span class="icon">📊</span> Dashboard</a>
+      <a class="nav-item" href="leads.html"><span class="icon">👥</span> Leads</a>
+      <a class="nav-item active" href="analytics.html"><span class="icon">📈</span> Analytics</a>
+      <span class="nav-section-label">Account</span>
+      <a class="nav-item" href="settings.html"><span class="icon">⚙️</span> Settings</a>
+      <a class="nav-item hidden" href="admin.html" id="admin-nav"><span class="icon">🛡️</span> Admin</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div id="user-avatar-wrap"></div>
+        <div style="overflow:hidden;flex:1">
+          <div class="user-name" id="user-name">Loading…</div>
+          <div class="user-email" id="user-email"></div>
+        </div>
+      </div>
+      <button class="nav-item" id="logout-btn" style="margin-top:4px;width:100%;color:var(--danger)">
+        <span class="icon">🚪</span> Sign out
+      </button>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title">Analytics</h1>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <!-- KPI Row -->
+      <div class="stats-grid" style="margin-bottom:var(--space-6)">
+        <div class="stat-card">
+          <div class="stat-label">Total Leads</div>
+          <div class="stat-value" id="stat-total">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Won</div>
+          <div class="stat-value" id="stat-won">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Conversion Rate</div>
+          <div class="stat-value" id="stat-conversion">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Pipeline Value</div>
+          <div class="stat-value" id="stat-pipeline" style="font-size:var(--text-xl)">—</div>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div style="margin-bottom:var(--space-6)">
+        <div class="chart-container">
+          <div class="chart-header">
+            <div class="chart-title">Monthly Lead Volume</div>
+            <span style="font-size:var(--text-xs);color:var(--text-muted)">Last 6 months</span>
+          </div>
+          <div class="chart-body" id="monthly-chart" style="min-height:200px">
+            <div style="color:var(--text-muted);font-size:var(--text-sm);margin:auto">Loading…</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="chart-container">
+          <div class="chart-header">
+            <div class="chart-title">Leads by Source</div>
+          </div>
+          <div class="funnel-list" id="source-chart">
+            <div style="color:var(--text-muted);font-size:var(--text-sm)">Loading…</div>
+          </div>
+        </div>
+
+        <div class="chart-container">
+          <div class="chart-header">
+            <div class="chart-title">Leads by Status</div>
+          </div>
+          <div class="funnel-list" id="status-chart">
+            <div style="color:var(--text-muted);font-size:var(--text-sm)">Loading…</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="../js/analytics.js"></script>
+</body>
+</html>

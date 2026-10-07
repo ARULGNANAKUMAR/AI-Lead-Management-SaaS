@@ -1,0 +1,43 @@
+<!-- Sidebar component — included in each page via JS injection or copy-pasted -->
+<!-- Usage: include this markup inside .app-layout -->
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">🧭</div>
+    <span class="logo-text">Lead Compass</span>
+  </div>
+
+  <nav class="sidebar-nav">
+    <span class="nav-section-label">Main</span>
+    <a class="nav-item" href="dashboard.html" id="nav-dashboard">
+      <span class="icon">📊</span> Dashboard
+    </a>
+    <a class="nav-item" href="leads.html" id="nav-leads">
+      <span class="icon">👥</span> Leads
+    </a>
+    <a class="nav-item" href="analytics.html" id="nav-analytics">
+      <span class="icon">📈</span> Analytics
+    </a>
+
+    <span class="nav-section-label">Account</span>
+    <a class="nav-item" href="settings.html" id="nav-settings">
+      <span class="icon">⚙️</span> Settings
+    </a>
+    <a class="nav-item hidden" href="admin.html" id="admin-nav">
+      <span class="icon">🛡️</span> Admin
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-info" id="user-info-wrap">
+      <div id="user-avatar-wrap"></div>
+      <div style="overflow:hidden;flex:1">
+        <div class="user-name" id="user-name">Loading…</div>
+        <div class="user-email" id="user-email"></div>
+      </div>
+    </div>
+    <button class="nav-item" id="logout-btn" style="margin-top:4px;width:100%;color:var(--danger)">
+      <span class="icon">🚪</span> Sign out
+    </button>
+  </div>
+</aside>

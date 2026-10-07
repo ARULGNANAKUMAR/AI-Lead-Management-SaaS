@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lead Compass</title>
+  <meta http-equiv="refresh" content="0;url=pages/login.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { background:#0f1117; display:flex; align-items:center; justify-content:center; min-height:100vh; font-family:Inter,sans-serif; color:#e8eaf6; }
+    .loader { display:flex; flex-direction:column; align-items:center; gap:16px; }
+    .spinner { width:32px; height:32px; border:2px solid #2e3347; border-top-color:#6366f1; border-radius:50%; animation:spin 0.6s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="loader">
+    <div class="spinner"></div>
+    <span style="color:#9ba3c9;font-size:14px">Loading Lead Compass…</span>
+  </div>
+  <script>
+    // Try to restore session, redirect appropriately
+    fetch('/api/auth/me', { credentials: 'include' })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (data?.data) {
+          window.location.href = 'pages/dashboard.html';
+        } else {
+          window.location.href = 'pages/login.html';
+        }
+      })
+      .catch(() => {
+        window.location.href = 'pages/login.html';
+      });
+  </script>
+</body>
+</html>

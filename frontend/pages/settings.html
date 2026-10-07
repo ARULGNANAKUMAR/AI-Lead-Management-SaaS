@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings — Lead Compass</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+<div class="app-layout">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">🧭</div>
+      <span class="logo-text">Lead Compass</span>
+    </div>
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">Main</span>
+      <a class="nav-item" href="dashboard.html"><span class="icon">📊</span> Dashboard</a>
+      <a class="nav-item" href="leads.html"><span class="icon">👥</span> Leads</a>
+      <a class="nav-item" href="analytics.html"><span class="icon">📈</span> Analytics</a>
+      <span class="nav-section-label">Account</span>
+      <a class="nav-item active" href="settings.html"><span class="icon">⚙️</span> Settings</a>
+      <a class="nav-item hidden" href="admin.html" id="admin-nav"><span class="icon">🛡️</span> Admin</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div id="user-avatar-wrap"></div>
+        <div style="overflow:hidden;flex:1">
+          <div class="user-name" id="user-name">Loading…</div>
+          <div class="user-email" id="user-email"></div>
+        </div>
+      </div>
+      <button class="nav-item" id="logout-btn" style="margin-top:4px;width:100%;color:var(--danger)">
+        <span class="icon">🚪</span> Sign out
+      </button>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title">Settings</h1>
+      </div>
+    </header>
+
+    <div class="content-area" style="max-width:700px">
+
+      <!-- Profile -->
+      <div class="card" style="margin-bottom:var(--space-6)">
+        <h2 style="font-size:var(--text-lg);font-weight:600;margin-bottom:var(--space-5)">Profile</h2>
+        <form id="profile-form">
+          <div style="display:grid;gap:var(--space-4)">
+            <div class="form-group">
+              <label class="form-label">Display Name</label>
+              <input class="input" id="profile-name" placeholder="Your name">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input class="input" id="profile-email" type="email" disabled>
+              <span class="form-hint">Email is managed by Google and cannot be changed here.</span>
+            </div>
+          </div>
+          <div style="margin-top:var(--space-5)">
+            <button type="submit" class="btn btn-primary" id="profile-submit">Save Profile</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Business -->
+      <div class="card" style="margin-bottom:var(--space-6)">
+        <h2 style="font-size:var(--text-lg);font-weight:600;margin-bottom:var(--space-5)">Business</h2>
+        <form id="business-form">
+          <div style="display:grid;gap:var(--space-4)">
+            <div class="form-group">
+              <label class="form-label">Business Name</label>
+              <input class="input" id="biz-name" placeholder="Acme Corp">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Domain</label>
+              <input class="input" id="biz-domain" placeholder="acme.com">
+            </div>
+          </div>
+          <div style="display:flex;gap:var(--space-6);margin-top:var(--space-4)">
+            <div>
+              <div class="form-label" style="margin-bottom:4px">Plan</div>
+              <span class="badge badge-new" id="plan-badge">Free</span>
+            </div>
+            <div>
+              <div class="form-label" style="margin-bottom:4px">Lead Usage</div>
+              <span style="font-size:var(--text-sm);color:var(--text-primary)" id="lead-usage">—</span>
+            </div>
+          </div>
+          <div style="margin-top:var(--space-5)">
+            <button type="submit" class="btn btn-primary" id="biz-submit">Save Settings</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Widget -->
+      <div class="card">
+        <h2 style="font-size:var(--text-lg);font-weight:600;margin-bottom:var(--space-2)">Lead Widget</h2>
+        <p style="font-size:var(--text-sm);color:var(--text-secondary);margin-bottom:var(--space-5)">
+          Embed this widget on your website to capture leads automatically.
+        </p>
+
+        <div class="form-group">
+          <label class="form-label">Your Widget Key</label>
+          <div style="display:flex;gap:var(--space-2)">
+            <input class="input" id="widget-key-input" readonly style="font-family:var(--font-mono);font-size:var(--text-sm)" placeholder="Loading…">
+            <button class="btn btn-secondary" onclick="copyWidgetKey()">Copy</button>
+          </div>
+        </div>
+
+        <div style="margin-top:var(--space-5)">
+          <div class="form-label" style="margin-bottom:var(--space-3)">Embed Code</div>
+          <div style="background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:var(--space-4);font-family:var(--font-mono);font-size:var(--text-xs);color:var(--text-secondary);overflow-x:auto;white-space:pre" id="embed-code">Loading embed code…</div>
+          <button class="btn btn-ghost btn-sm" style="margin-top:var(--space-2)" onclick="copyEmbed()">Copy embed code</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { requireAuth, logout } from '../js/auth.js';
+  import api from '../js/api.js';
+  import { toast, avatarEl } from '../js/utils.js';
+
+  async function init() {
+    const user = await requireAuth();
+
+    // Render user info
+    document.getElementById('user-avatar-wrap').innerHTML = avatarEl(user);
+    document.getElementById('user-name').textContent = user.name;
+    document.getElementById('user-email').textContent = user.email;
+    document.getElementById('profile-name').value = user.name;
+    document.getElementById('profile-email').value = user.email;
+
+    if (user.role === 'admin') {
+      document.getElementById('admin-nav')?.classList.remove('hidden');
+    }
+
+    // Load business
+    try {
+      const res = await api.business.get();
+      const biz = res.data;
+      document.getElementById('biz-name').value = biz.name || '';
+      document.getElementById('biz-domain').value = biz.domain || '';
+      document.getElementById('plan-badge').textContent = biz.plan || 'free';
+      document.getElementById('lead-usage').textContent = `${biz.lead_count} / ${biz.lead_limit}`;
+
+      const key = biz.widget_key || '';
+      document.getElementById('widget-key-input').value = key;
+
+      const embed = `<script src="https://yourdomain.com/widget/lead-form.js"
+  data-key="${key}"
+  data-theme="dark">
+<\/script>`;
+      document.getElementById('embed-code').textContent = embed;
+    } catch (e) {
+      toast('Failed to load settings', 'error');
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', logout);
+
+    document.getElementById('profile-form').addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn = document.getElementById('profile-submit');
+      btn.disabled = true; btn.textContent = 'Saving…';
+      try {
+        await api.user.update({ name: document.getElementById('profile-name').value });
+        toast('Profile saved!', 'success');
+      } catch { toast('Failed to save', 'error'); }
+      finally { btn.disabled = false; btn.textContent = 'Save Profile'; }
+    });
+
+    document.getElementById('business-form').addEventListener('submit', async e => {
+      e.preventDefault();
+      const btn = document.getElementById('biz-submit');
+      btn.disabled = true; btn.textContent = 'Saving…';
+      try {
+        await api.business.update({
+          name: document.getElementById('biz-name').value,
+          domain: document.getElementById('biz-domain').value,
+        });
+        toast('Business settings saved!', 'success');
+      } catch { toast('Failed to save', 'error'); }
+      finally { btn.disabled = false; btn.textContent = 'Save Settings'; }
+    });
+  }
+
+  window.copyWidgetKey = () => {
+    const val = document.getElementById('widget-key-input').value;
+    if (val) navigator.clipboard.writeText(val).then(() => toast('Copied!', 'success'));
+  };
+
+  window.copyEmbed = () => {
+    const val = document.getElementById('embed-code').textContent;
+    if (val) navigator.clipboard.writeText(val).then(() => toast('Embed code copied!', 'success'));
+  };
+
+  init();
+</script>
+</body>
+</html>

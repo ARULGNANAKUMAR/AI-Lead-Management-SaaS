@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Lead Compass</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+<div class="app-layout">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">🧭</div>
+      <span class="logo-text">Lead Compass</span>
+    </div>
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">Main</span>
+      <a class="nav-item" href="dashboard.html"><span class="icon">📊</span> Dashboard</a>
+      <a class="nav-item" href="leads.html"><span class="icon">👥</span> Leads</a>
+      <a class="nav-item" href="analytics.html"><span class="icon">📈</span> Analytics</a>
+      <span class="nav-section-label">Account</span>
+      <a class="nav-item" href="settings.html"><span class="icon">⚙️</span> Settings</a>
+      <a class="nav-item active" href="admin.html"><span class="icon">🛡️</span> Admin</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div id="user-avatar-wrap"></div>
+        <div style="overflow:hidden;flex:1">
+          <div class="user-name" id="user-name">Loading…</div>
+          <div class="user-email" id="user-email"></div>
+        </div>
+      </div>
+      <button class="nav-item" id="logout-btn" style="margin-top:4px;width:100%;color:var(--danger)">
+        <span class="icon">🚪</span> Sign out
+      </button>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title">Admin</h1>
+        <span class="admin-badge">⭐ Admin Panel</span>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-5)">
+          <h2 style="font-size:var(--text-lg);font-weight:600">All Users</h2>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Joined</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="users-tbody">
+              <tr>
+                <td colspan="5" style="text-align:center;padding:40px">
+                  <div class="spinner" style="margin:auto"></div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="../js/admin.js"></script>
+</body>
+</html>

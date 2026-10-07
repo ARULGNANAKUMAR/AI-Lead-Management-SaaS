@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Lead Compass</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+<body>
+<div class="app-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">🧭</div>
+      <span class="logo-text">Lead Compass</span>
+    </div>
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">Main</span>
+      <a class="nav-item active" href="dashboard.html"><span class="icon">📊</span> Dashboard</a>
+      <a class="nav-item" href="leads.html"><span class="icon">👥</span> Leads</a>
+      <a class="nav-item" href="analytics.html"><span class="icon">📈</span> Analytics</a>
+      <span class="nav-section-label">Account</span>
+      <a class="nav-item" href="settings.html"><span class="icon">⚙️</span> Settings</a>
+      <a class="nav-item hidden" href="admin.html" id="admin-nav"><span class="icon">🛡️</span> Admin</a>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div id="user-avatar-wrap"></div>
+        <div style="overflow:hidden;flex:1">
+          <div class="user-name" id="user-name">Loading…</div>
+          <div class="user-email" id="user-email"></div>
+        </div>
+      </div>
+      <button class="nav-item" id="logout-btn" style="margin-top:4px;width:100%;color:var(--danger)">
+        <span class="icon">🚪</span> Sign out
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title">Dashboard</h1>
+      </div>
+      <div class="topbar-right">
+        <a href="leads.html" class="btn btn-primary btn-sm">+ Add Lead</a>
+      </div>
+    </header>
+
+    <div class="content-area">
+      <!-- Stat Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Leads</div>
+          <div class="stat-value" id="stat-total">—</div>
+          <div class="stat-change up">All time</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">New (30d)</div>
+          <div class="stat-value" id="stat-new">—</div>
+          <div class="stat-change up">Last 30 days</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Won</div>
+          <div class="stat-value" id="stat-won">—</div>
+          <div class="stat-change up">Closed deals</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Conversion</div>
+          <div class="stat-value" id="stat-conversion">—</div>
+          <div class="stat-change">Won / Total</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Pipeline Value</div>
+          <div class="stat-value" id="stat-value" style="font-size:var(--text-xl)">—</div>
+          <div class="stat-change">Total value</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">This Week</div>
+          <div class="stat-value" id="stat-recent">—</div>
+          <div class="stat-change">Last 7 days</div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="grid-2" style="margin-bottom:var(--space-6)">
+        <!-- Monthly chart -->
+        <div class="chart-container">
+          <div class="chart-header">
+            <div class="chart-title">Leads by Month</div>
+            <span style="font-size:var(--text-xs);color:var(--text-muted)">Last 6 months</span>
+          </div>
+          <div class="chart-body" id="chart-body">
+            <div style="color:var(--text-muted);font-size:var(--text-sm);margin:auto">Loading…</div>
+          </div>
+        </div>
+
+        <!-- Funnel -->
+        <div class="chart-container">
+          <div class="chart-header">
+            <div class="chart-title">Pipeline Funnel</div>
+          </div>
+          <div class="funnel-list" id="funnel-list">
+            <div style="color:var(--text-muted);font-size:var(--text-sm)">Loading…</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent leads shortcut -->
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-4)">
+          <span style="font-weight:600">Quick Actions</span>
+        </div>
+        <div style="display:flex;gap:var(--space-3);flex-wrap:wrap">
+          <a href="leads.html" class="btn btn-secondary">View All Leads</a>
+          <a href="analytics.html" class="btn btn-secondary">Analytics</a>
+          <a href="settings.html" class="btn btn-secondary">Widget Setup</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="../js/dashboard.js"></script>
+</body>
+</html>
